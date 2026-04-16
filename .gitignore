@@ -1,0 +1,10 @@
+# Python cache
+__pycache__/
+**/__pycache__/
+
+# Large models or specific folders
+models/
+**/models/
+
+# Docker config
+.dockerignore

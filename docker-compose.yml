@@ -1,15 +1,28 @@
 services:
   api:
-    build: .
+    build: ./api
+    # dockerfile의 위치를 알려줘야해서 api폴더 안에 있다고 알려줌
     ports:
       - "8000:8000"
     depends_on:
       - db
-
+    volumes:
+      - ./api:/app
   db:
     image: mysql:8.0
+    container_name: db
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: app_db
     ports:
       - "33061:3306"
+    volumes:
+      - local_db:/var/lib/mysql 
+
+  worker:
+    build: ./worker
+    volumes:
+      - ./worker:/app
+volumes:
+  local_db:
+  # 내컴퓨터 안에 local_db폴더 만듦
