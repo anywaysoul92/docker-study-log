@@ -28,12 +28,13 @@ def run():
 
         task_data: dict = json.loads(task)
 
+        messages = [{"role": "system", "content": SYSTEM_PROMPT}]
+        messages.extend(task_data["messages"])
+        messages = task_data["messages"]
+
         # 2) (반복) 추론 -> 토큰 -> publish
         response_generator = llm.create_chat_completion(
-            messages=[
-                {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user", "content": task_data["user_input"]},
-            ],
+            messages=messages,
             max_tokens=256,
             temperature=0.7,
             stream=True
